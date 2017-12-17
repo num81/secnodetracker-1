@@ -66,13 +66,22 @@ const getSetupInfo = (url, cb) => {
     });
 }
 
-const validator = (value) => {
+const t_validator = (value) => {
     if (value.length !== 35) {
         throw new Error('That does not appear to be a t_address.');
     }
 
     return value;
 };
+
+const z_validator = (value) => {
+    if (value.length !== 95) {
+        throw new Error('That does not appear to be a z_address.');
+    }
+
+    return value;
+};
+
 //IP type validator
 const ipvalidator = (value) => {
     if (value == 4) {
@@ -104,6 +113,8 @@ const regvalidator = (value) => {
 
 //get values if setup rerun
 let addr = localStorage.getItem('stakeaddr') || null;
+let taddr = localStorage.getItem('taddress') || null;
+let zaddr = localStorage.getItem('zaddress') || null;
 let email = localStorage.getItem('email') || null;
 let fqdn = localStorage.getItem('fqdn') || null;
 let ipv = localStorage.getItem('ipv') || 4;
@@ -121,14 +132,22 @@ getSetupInfo(url, (err, result) => {
     let msg3 = fqdn ? ' (Existing: ' + fqdn + '):' : ':';
     let msg4 = ipv ? ' (Existing: ' + ipv + '):' : ':';
     let msg5 = region ? ' (Default: ' + region + '):' : ':';
-
+    let msg6 = taddr ? ' (Existing: ' + taddr + '):' : ':';
+    let msg7 = zaddr ? ' (Existing: ' + zaddr + '):' : ':';
+    
     //Prompt user for values 
     promptly
-        .prompt('Staking transparent address' + msg1, { 'default': addr, 'validator': validator })
+        .prompt('Staking transparent address' + msg1, { 'default': addr, 'validator': t_validator })
         .then((value) => {
             localStorage.setItem('stakeaddr', value);
             return promptly.prompt('Alert email address' + msg2, { 'default': email });
         })
+        .then((value) => {
+            localStorage.setItem('taddress', value);
+            retrun promptley.prompt('Node t_address for ID' + msg6, { 'default': taddr, 'validator': t_validator })
+        .then((value) => {
+            localStorage.setItem('zaddress', value);
+            return promptley.prompt('Node z_address for challenges' + msg7, { 'default': zaddr, 'validator': z_validator })
         .then((value) => {
             localStorage.setItem('email', value);
             return promptly.prompt('Full hostname (FQDN) used in cert. example: z1.mydomain.com ' + msg3, { 'default': fqdn });
