@@ -59,7 +59,7 @@ let returningHome = false;
 const initialize = () => {
 	// check connectivity by getting the t_address.
 	// pass identity to server on success
-	SecNode.getPrimaryAddress((err, taddr) => {
+	SecNode.getPrimaryAddress((err) => {
 		if (err) {
 			console.error(err);
 
@@ -76,7 +76,7 @@ const initialize = () => {
 			console.log("Secure Node t_address (not for stake)=" + taddr);
 			SecNode.ident = ident;
 
-			SecNode.getAddrWithBal((err, result) => {
+			SecNode.getZGetBallance((err, result) => {
 				if (err) {
 					console.error(err);
 					return
