@@ -49,7 +49,7 @@ class SecNode {
     this.zenDownInterval = 1000 * 61;
     this.zenDownTimer = null;
     this.zenDownLoop = () => {
-      this.getPrimaryAddress((err, amt) => {
+    this.getPrimaryAddress((err, amt) => {
         if (err) {
           console.error(logtime(), err);
         } else {
@@ -88,6 +88,14 @@ class SecNode {
       self.waiting = false;
       return cb(null, data[0]);
     });
+  }
+  
+  getZGetBalance(cb) {
+    const self = this;
+    let zaddr = local.getItem('zaddress')
+    self.zenrpc.z_getbalance(zaddr)
+      .then((bal) => {
+        return {zaddr, bal })
   }
 
   getAddrWithBal(cb) {
