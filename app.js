@@ -44,7 +44,8 @@ if (process.platform == 'linux') {
 
 
 // gather identity
-let taddr;
+let taddr = local.getItem('taddress') || null;
+let addr = local.getItem('zaddress') || null;
 let nodeid = local.getItem('nodeid') || null;
 let fqdn = local.getItem('fqdn') || null;
 if (fqdn) fqdn = fqdn.trim();
