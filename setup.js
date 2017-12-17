@@ -144,10 +144,12 @@ getSetupInfo(url, (err, result) => {
         })
         .then((value) => {
             localStorage.setItem('taddress', value);
-            retrun promptley.prompt('Node t_address for ID' + msg6, { 'default': taddr, 'validator': t_validator })
+            return promptly.prompt('Node t_address for ID' + msg6, { 'default': taddr, 'validator': t_validator });
+		})
         .then((value) => {
             localStorage.setItem('zaddress', value);
-            return promptley.prompt('Node z_address for challenges' + msg7, { 'default': zaddr, 'validator': z_validator })
+            return promptly.prompt('Node z_address for challenges' + msg7, { 'default': zaddr, 'validator': z_validator });
+		})
         .then((value) => {
             localStorage.setItem('email', value);
             return promptly.prompt('Full hostname (FQDN) used in cert. example: z1.mydomain.com ' + msg3, { 'default': fqdn });
@@ -238,5 +240,3 @@ const getRPC = () => {
     console.log("Setup Complete");
 
 }
-
-
